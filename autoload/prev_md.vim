@@ -6,25 +6,28 @@ let s:prev_buf_nr = 0
 function! prev_md#preview() abort
   let bufnr = bufnr()
   let tmp = tempname()
+  let s:md_winid = bufwinid(bufnr('%'))
   call writefile(getline(1, "$"), tmp)
   let s:prev_buf_nr = term_start("mdr", {
+        \ 'vertical': 1,
         \ 'in_io': 'file',
         \ 'in_name': tmp,
         \ 'exit_cb': function('s:remove_tmp', [tmp]),
         \ 'term_finish': 'open',
-        \ 'term_opencmd': 'new|b %d',
+        \ 'term_opencmd': 'vnew|b %d',
         \ })
-  let timer = timer_start(5000, 'MdrExec', {'repeat': 1})
+  let timer = timer_start(7000, 'MdrExec', {'repeat': 1})
 endfunction
 
 function! MdrExec(timer) abort
+  call win_gotoid(s:md_winid)
   let tmp = tempname()
   call writefile(getline(1, "$"), tmp)
 
   let winid = bufwinid(s:prev_buf_nr)
   call win_gotoid(winid)
   "call StopJob()
-  let jobid = term_getjob(bufnr('%'))
+  let jobid = term_getjob(s:prev_buf_nr)
   call job_stop(jobid)
   echo jobid
   let c = 0
@@ -36,8 +39,8 @@ function! MdrExec(timer) abort
     let c += 1
   endwhile
   let s:prev_buf_nr = term_start("mdr", {
+        \ 'hidden': 1,
         \ 'curwin': 1,
-        \ 'vertical': 1,
         \ 'in_io': 'file',
         \ 'in_name': tmp,
         \ 'exit_cb': function('s:remove_tmp', [tmp]),
