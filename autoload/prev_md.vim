@@ -19,6 +19,10 @@ endfunction
 
 function! MdrExec(timer) abort
   let s:current_winid = bufwinid(bufnr())
+  " if current cursor == mdr preview
+  if bufnr() == s:prev_buf_nr
+    return
+  endif
   " if mdr preview not exist
   if !bufexists(s:prev_buf_nr)
     call timer_stopall()
