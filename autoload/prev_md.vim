@@ -28,6 +28,10 @@ function! MdrExec(timer) abort
     call timer_stopall()
     return
   endif
+  " if md modified
+  if !&modified
+    return
+  endif
 
   " write tmp file
   call win_gotoid(s:md_winid)
