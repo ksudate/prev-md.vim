@@ -12,7 +12,7 @@ PrevMd -  display Markdown previews on Vim. It achieves something similar to rea
 ==============================================================================
 COMMANDS						*prev_md-command*
 
-							*:PrevimOpen*
+							*:Prevmd*
 :Prevmd
 	Open the current file on the Vim Terminal.
 
