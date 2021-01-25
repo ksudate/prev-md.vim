@@ -10,7 +10,7 @@ DESCRIPTION                                                 *prev_md-contents*
 PrevMd -  display Markdown previews on Vim. It achieves something similar to real-time previewing.
 
 ==============================================================================
-COMMANDS						*previm-command*
+COMMANDS						*prev_md-command*
 
 							*:PrevimOpen*
 :Prevmd
