@@ -14,7 +14,7 @@ function! prev_md#preview() abort
         \ 'term_opencmd': 'vnew|b %d',
         \ 'term_kill': 'kill',
         \ })
-  let timer = timer_start(7000, 'MdrExec', {'repeat': -1})
+  let timer = timer_start(g:auto_prev_time, 'MdrExec', {'repeat': -1})
 endfunction
 
 function! MdrExec(timer) abort
@@ -61,7 +61,6 @@ function! MdrExec(timer) abort
         \ 'term_opencmd': 'vnew|b %d',
         \ 'term_kill': 'kill',
         \ })
-
   " move before window
   call win_gotoid(s:current_winid)
 endfunction
