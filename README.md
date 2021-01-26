@@ -18,5 +18,5 @@ Plug 'tmrekk121/prev-md.vim'
 ## Usage
 
 ```
-:Prevmd
+:PrevMd
 ```
