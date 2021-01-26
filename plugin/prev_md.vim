@@ -7,7 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " default setting
-if !exists('g:mkdp_auto_start')
+if !exists('g:auto_prev_time')
     let g:auto_prev_time = 5000
 endif
 
