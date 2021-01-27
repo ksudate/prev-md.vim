@@ -2,6 +2,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! prev_md#preview() abort
+  if !executable('mdr')
+    echomsg 'not found mdr'
+    return
+  endif
   " write tmp file
   let tmp = tempname()
   let s:md_winid = bufwinid(bufnr())
