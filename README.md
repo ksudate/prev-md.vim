@@ -1,6 +1,6 @@
 # prev-md.vim
 
-Vim plugin for markdown preview
+Vim plugin for realtime markdown preview
 [![asciicast](https://asciinema.org/a/ImVkHhVEsF4iEvBjy1XIRgPNi.svg?autoplay=1&speed=3)](https://asciinema.org/a/ImVkHhVEsF4iEvBjy1XIRgPNi?autoplay=1&speed=3)
 
 ## Installation
