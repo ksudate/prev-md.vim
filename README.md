@@ -2,7 +2,6 @@
 
 Vim plugin for realtime markdown preview
 ![prev-md.gif](https://github.com/tmrekk121/prev-md.vim/tree/main/doc/screenshot.gif)
-[![asciicast](https://asciinema.org/a/ImVkHhVEsF4iEvBjy1XIRgPNi.svg?autoplay=1&speed=3)](https://asciinema.org/a/ImVkHhVEsF4iEvBjy1XIRgPNi?autoplay=1&speed=3)
 
 ## Installation
 
