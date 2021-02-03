@@ -14,15 +14,15 @@ Plug 'tmrekk121/prev-md.vim'
 
 ## Requirements
 
-- [MichaelMure/mdr](https://github.com/MichaelMure/mdr)
+- [charmbracelet/glow](https://github.com/charmbracelet/glow)
 
 ## Usage
 
 ```
-:PrevMd
+:Prevmd
 ```
 
-## Settings
+## Settiongs
 
 ```
 let g:auto_prev_time=5000 " set preview refresh interval (default 5000)

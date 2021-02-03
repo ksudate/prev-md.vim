@@ -2,73 +2,71 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! prev_md#preview() abort
-  if !executable('mdr')
-    echomsg 'not found mdr'
+  if !executable('glow')
+    echomsg 'not found glow'
     return
   endif
   " write tmp file
-  let tmp = tempname()
-  let s:md_winid = bufwinid(bufnr())
-  call writefile(getline(1, "$"), tmp)
+  let s:tmp = tempname() . '.md'
+  call writefile(getline(1, "$"), s:tmp)
+  let s:md_buf_nr = bufnr()
+  let s:md_winid = bufwinid(s:md_buf_nr)
   let s:option = {
     \ 'vertical': 1,
-    \ 'in_io': 'file',
-    \ 'in_name': tmp,
-    \ 'exit_cb': function('s:remove_tmp', [tmp]),
+    \ 'exit_cb': function('s:remove_tmp', [s:tmp]),
     \ 'term_finish': 'open',
     \ 'term_opencmd': 'vnew|b %d',
     \ 'term_kill': 'kill',
     \ }
-  let s:prev_buf_nr = term_start("mdr", s:option)
-  let timer = timer_start(g:auto_prev_time, 'MdrExec', {'repeat': -1})
+  let s:prev_buf_nr = term_start('/bin/sh', s:option)
+  call term_sendkeys(s:prev_buf_nr, "export PAGER=\"less -R\" \<CR>")
+  let s:winid = bufwinid(s:prev_buf_nr)
+  let sendkey = printf("glow %s -p \<CR>", s:tmp)
+  call term_sendkeys(s:prev_buf_nr, sendkey)
+  call win_gotoid(s:prev_buf_nr)
+  let timer = timer_start(g:auto_prev_time, 'GlowExec', {'repeat': -1})
 endfunction
 
-function! MdrExec(timer) abort
-  let s:current_winid = bufwinid(bufnr())
-  " if current cursor == mdr preview
-  if bufnr() == s:prev_buf_nr
+function! GlowExec(timer) abort
+  " if current cursor != markdown buffer
+  if bufnr() != s:md_buf_nr
     return
   endif
-  " if mdr preview not exist
-  if !bufexists(s:prev_buf_nr)
-    call timer_stopall()
+  " if glow window not exist || markdown window not exist
+  if bufwinnr(s:prev_buf_nr) == -1 || bufwinnr(s:md_buf_nr) == -1
+    echomsg 'stop timer'
+    call timer_stop(a:timer)
     return
   endif
-  " if md modified
+  " if markdown modified
   if !&modified
     return
   endif
 
+  let tmp_ary_ex = readfile(s:tmp)
+
   call win_gotoid(s:md_winid)
-  let tmp = tempname()
-  call writefile(getline(1, "$"), tmp)
+  let s:tmp = tempname() . '.md'
+  call writefile(getline(1, "$"), s:tmp)
 
-  let winid = bufwinid(s:prev_buf_nr)
-  call win_gotoid(winid)
-  " job stop
-  let jobid = term_getjob(s:prev_buf_nr)
-  call job_stop(jobid)
-  let c = 0
-  while job_status(jobid) is# 'run'
-    if c > 5
-      return
-    endif
-    sleep 1m
-    let c += 1
-  endwhile
-  let s:option = {
-    \ 'curwin': 1,
-    \ 'in_io': 'file',
-    \ 'in_name': tmp,
-    \ 'exit_cb': function('s:remove_tmp', [tmp]),
-    \ 'term_finish': 'open',
-    \ 'term_opencmd': 'vnew|b %d',
-    \ 'term_kill': 'kill',
-    \ }
-  let s:prev_buf_nr = term_start("mdr", s:option)
+  let tmp_ary = readfile(s:tmp)
+  if tmp_ary_ex == tmp_ary
+    return
+  endif
 
-  " move before window
-  call win_gotoid(s:current_winid)
+  let current_line = getline('.')
+  "let pager = printf("export PAGER=\"less -R+/%s\" \<CR>", current_line)
+  let sendkey = printf("glow %s -p \<CR>", s:tmp)
+
+  " exit glow window
+  call term_sendkeys(s:prev_buf_nr, 'q')
+  call term_sendkeys(s:prev_buf_nr, "\<c-l>")
+  call term_wait(s:prev_buf_nr)
+
+  "call term_sendkeys(s:prev_buf_nr, pager)
+  call term_sendkeys(s:prev_buf_nr, sendkey)
+  call term_wait(s:prev_buf_nr)
+
 endfunction
 
 
