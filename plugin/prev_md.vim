@@ -11,6 +11,10 @@ if !exists('g:auto_prev_time')
     let g:auto_prev_time = 7000
 endif
 
+if !exists('g:prev_md_auto_update')
+    let g:prev_md_auto_update = 1
+endif
+
 command! PrevMd call prev_md#preview()
 
 let &cpo = s:save_cpo

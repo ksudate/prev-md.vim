@@ -24,5 +24,6 @@ Plug 'tmrekk121/prev-md.vim'
 ## Settiongs
 
 ```
-let g:auto_prev_time=5000 " set preview refresh interval (default 5000)
+let g:auto_prev_time=5000   " set preview refresh interval (default 5000)
+let g:prev_md_auto_update=1 "enable auto preview (default 1)
 ```
