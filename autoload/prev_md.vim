@@ -26,7 +26,9 @@ function! prev_md#preview() abort
   let sendkey = printf("glow %s -p \<CR>", s:tmp)
   call term_sendkeys(s:prev_buf_nr, sendkey)
   call win_gotoid(s:prev_buf_nr)
-  let timer = timer_start(g:auto_prev_time, 'GlowExec', {'repeat': -1})
+  if get(g:, 'prev_md_auto_update', 0) == 1
+    let timer = timer_start(g:auto_prev_time, 'GlowExec', {'repeat': -1})
+  endif
 endfunction
 
 function! GlowExec(timer) abort
