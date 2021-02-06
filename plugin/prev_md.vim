@@ -8,7 +8,7 @@ set cpo&vim
 
 " default setting
 if !exists('g:auto_prev_time')
-    let g:auto_prev_time = 5000
+    let g:auto_prev_time = 7000
 endif
 
 command! PrevMd call prev_md#preview()

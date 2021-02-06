@@ -9,8 +9,10 @@ function! prev_md#preview() abort
   " write tmp file
   let s:tmp = tempname() . '.md'
   call writefile(getline(1, "$"), s:tmp)
+
   let s:md_buf_nr = bufnr()
   let s:md_winid = bufwinid(s:md_buf_nr)
+
   let s:option = {
     \ 'vertical': 1,
     \ 'exit_cb': function('s:remove_tmp', [s:tmp]),
