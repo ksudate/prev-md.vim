@@ -2,6 +2,8 @@
 
 Vim plugin for realtime markdown preview
 
+![screenshot](https://user-images.githubusercontent.com/33239455/107126540-e1d36000-68f3-11eb-8463-7e0c5e061c8f.gif)
+
 ## Installation
 
 To install using [Vim-Plug](https://github.com/junegunn/vim-plug):
