@@ -10,7 +10,7 @@ To install using [Vim-Plug](https://github.com/junegunn/vim-plug):
 
 ```
 " add this line to your .vimrc
-Plug 'tmrekk121/prev-md.vim'
+Plug 'ksudate/prev-md.vim'
 ```
 
 ## Requirements
